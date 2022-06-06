@@ -9,11 +9,15 @@ declare module "styled-components" {
       heading: string;
       mono: string;
     };
+    spacing: number;
     page: {
       background: string;
+      border: string;
     };
+    shadow: string;
     colors: {
       primary: string;
+      highlight: string;
       secondary: string;
     };
   }

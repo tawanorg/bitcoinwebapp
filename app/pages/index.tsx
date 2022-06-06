@@ -1,11 +1,19 @@
-import { Heading, Page } from "@bitcoin/design";
+import { Heading, HStack, Page, Stack } from "@bitcoin/design";
 import type { NextPage } from "next";
+import Card from "./components/Card";
 
 const Home: NextPage = () => {
   return (
-    <Page.Main>
-      <Heading>Bitcoin.com</Heading>
-    </Page.Main>
+    <Page.Container>
+      <Stack>
+        <Heading.H1>TewEx Market</Heading.H1>
+        <HStack>
+          <Card />
+          <Card />
+          <Card />
+        </HStack>
+      </Stack>
+    </Page.Container>
   );
 };
 

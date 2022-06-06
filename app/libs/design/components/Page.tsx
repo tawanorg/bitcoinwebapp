@@ -2,8 +2,9 @@ import styled from "styled-components";
 
 const Page = () => {};
 
-Page.Main = styled.main((props) => ({
-  backgroundColor: props.theme.page.background,
-}));
+Page.Container = styled.div`
+  max-width: 786px;
+  margin: 0px auto;
+`;
 
 export default Page;
