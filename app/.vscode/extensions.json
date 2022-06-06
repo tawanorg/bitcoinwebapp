@@ -1,0 +1,13 @@
+{
+    "recommendations": [
+        "styled-components.vscode-styled-components",
+        "dbaeumer.vscode-eslint",
+        "github.github-vscode-theme",
+        "visualstudioexptteam.vscodeintellicode",
+        "esbenp.prettier-vscode",
+        "wayou.vscode-todo-highlight",
+        "vscode-icons-team.vscode-icons",
+        "tawanorg.vscode-inline-emoji",
+        "naumovs.color-highlight"
+    ]
+}
