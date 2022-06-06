@@ -1,0 +1,12 @@
+services:
+  bitcoinwebapp:
+    container_name: bitcoinwebapp
+    build: 
+      context: ./app
+      dockerfile: ../Dockerfile
+    ports:
+      - "9000:3000"
+    volumes:
+      - ./app:/home/docker/app
+    tty: true
+    restart: always
