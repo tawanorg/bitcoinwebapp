@@ -4,8 +4,8 @@ export type ThemeNames = "minimal";
 
 export const minimal: DefaultTheme = {
   fonts: {
-    heading: '"Inter", Arial, sans-serif',
-    body: '"Poppins", Arial, sans-serif',
+    heading: '"Inter", Arial, Helvetica Neue, sans-serif',
+    body: '"Poppins", Arial, -apple-system, BlinkMacSystemFont, Helvetica Neue, sans-serif',
     mono: "Consolas, monaco, monospace",
   },
   page: {
