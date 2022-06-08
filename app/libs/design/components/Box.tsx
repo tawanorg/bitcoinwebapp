@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
 const Box = styled.div`
-  cursor: ${(props) => props?.cursor};
-
   border-width: 1px;
   border-color: ${(props) => props.theme.page.border};
   border-style: solid;

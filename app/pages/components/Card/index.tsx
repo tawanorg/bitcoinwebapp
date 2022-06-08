@@ -1,4 +1,5 @@
 import { Box, Stack } from "@bitcoin/design";
+import { TokenCollection } from "libs/types";
 import Image from "next/image";
 import React, { PropsWithChildren } from "react";
 
@@ -6,9 +7,9 @@ const CardInner = (props: PropsWithChildren<any>) => (
   <Box cursor="pointer" {...props} />
 );
 
-function Card() {
+function Card({ name, symbol, ...props }: TokenCollection) {
   return (
-    <CardInner>
+    <CardInner {...props}>
       <Stack>
         <div>
           <Image
@@ -18,7 +19,9 @@ function Card() {
             height={50}
           />
         </div>
-        <div>Bitcoin Cash</div>
+        <div>
+          {name} ({symbol.toUpperCase()})
+        </div>
       </Stack>
     </CardInner>
   );
