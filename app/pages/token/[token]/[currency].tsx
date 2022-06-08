@@ -26,6 +26,7 @@ const Home: NextPage<TokenSlashCurrency> = ({ token, currency }) => {
     tokenActions.selectTokenSlashCurrency({ token, currency })
   );
 
+  // On mounted tasks
   useEffect(() => {
     feedActions.getFetchRecentFeed();
     tokenActions.getTokenSlashCurrency({
