@@ -3,7 +3,7 @@ import createSagaMiddleware from "redux-saga";
 import { all } from "redux-saga/effects";
 import feedReducer from "./engine/feed/feed.reducer";
 import feedSaga from "./engine/feed/feed.sagas";
-import { notify } from "./utils";
+import notify from "./utils/notify";
 
 const sagaMiddleware = createSagaMiddleware();
 

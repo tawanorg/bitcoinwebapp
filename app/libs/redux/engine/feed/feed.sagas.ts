@@ -1,5 +1,5 @@
 import { takeLatest } from "redux-saga/effects";
-import { notify } from "../../utils";
+import notify from "../../utils/notify";
 import { actions } from "./feed.reducer";
 
 function* feedSaga() {
