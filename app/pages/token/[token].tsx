@@ -1,9 +1,18 @@
 import { Heading, Page, Stack } from "@bitcoin/design";
+import { useFeedEngine } from "@bitcoin/redux";
 import { GetStaticPropsContext, TokenCollection } from "libs/types";
 import type { NextPage } from "next";
+import { useEffect } from "react";
 import fetcher from "../utils/fetcher";
 
 const Home: NextPage = (props) => {
+  const { data, ...actions } = useFeedEngine();
+
+  // Get recent news from source
+  useEffect(() => {
+    actions.getInitialFeed();
+  }, []);
+
   return (
     <Page.Container>
       <Stack>
