@@ -7,6 +7,9 @@ interface Props {
 
 const QuickChart = ({ data: rawData = [] }: Props) => {
   const data = genChartData(rawData);
+
+  if (data.length === 0) return null;
+
   return (
     <ResponsiveContainer width={200} height={100}>
       <AreaChart data={data}>
