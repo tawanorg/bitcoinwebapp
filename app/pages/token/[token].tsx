@@ -21,6 +21,7 @@ const Home: NextPage = () => {
     <Page.Container>
       <Stack>
         <Heading.H1>Tawan Exchange</Heading.H1>
+        {isRecentPostLoading && <div>Loading</div>}
         {!isRecentPostLoading && recentPosts.length === 0 && <div>No news</div>}
         {!isRecentPostLoading && recentPosts.length > 0 && (
           <ul>
