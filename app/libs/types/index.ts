@@ -11,7 +11,7 @@ export interface ApiResponse<T> {
 }
 
 export interface GetTokenResponse {
-  history: any;
+  history: [string, number][];
   token: string;
   currency: string;
   spot: {

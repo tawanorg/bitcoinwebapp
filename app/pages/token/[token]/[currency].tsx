@@ -1,3 +1,4 @@
+import { MarketChart } from "@bitcoin/charts";
 import { Heading, Page, Stack } from "@bitcoin/design";
 import { useFeedEngine, useTokenEngine } from "@bitcoin/redux";
 import { TokenSlashCurrency } from "libs/redux/engine/token/token.types";
@@ -59,6 +60,10 @@ const Home: NextPage<TokenSlashCurrency> = ({ token, currency }) => {
             </div>
           </>
         )}
+        <MarketChart
+          currency={currentTokenSlashCurrency?.currency}
+          data={currentTokenSlashCurrency?.history ?? []}
+        />
         {isRecentPostLoading && <div>Loading</div>}
         {!isRecentPostLoading && recentPosts.length === 0 && <div>No news</div>}
         {!isRecentPostLoading && recentPosts.length > 0 && (

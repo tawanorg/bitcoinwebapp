@@ -12,6 +12,7 @@ const GlobalStyle = createGlobalStyle`
   h1,h2,h3,h4 {
     font-family: ${(props) => props.theme.fonts.heading};
   }
+  
 `;
 
 export default GlobalStyle;
