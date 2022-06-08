@@ -27,7 +27,13 @@ const Home: NextPage<Props> = ({ tokens = [] }) => {
 };
 
 export async function getServerSideProps() {
-  const allTokenResult = await fetcher("/api/all-tokens");
+  const allTokenResult = await fetcher<TokenCollection[]>("/api/all-tokens");
+
+  if (!allTokenResult)
+    return {
+      props: { tokens: [] },
+    };
+
   return {
     props: {
       tokens: allTokenResult,

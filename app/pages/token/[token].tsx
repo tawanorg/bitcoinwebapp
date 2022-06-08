@@ -15,14 +15,23 @@ const Home: NextPage = (props) => {
 
 export async function getStaticPaths() {
   const getAllTokenResult = await fetcher<TokenCollection[]>("/api/all-tokens");
-  const allTokenPaths = getAllTokenResult?.map(({ symbol }) => ({
+
+  if (!getAllTokenResult) {
+    return {
+      fallback: false,
+      paths: [],
+    };
+  }
+
+  const allTokenPaths = getAllTokenResult.map(({ symbol }) => ({
     params: {
       token: symbol,
     },
   }));
+
   return {
     fallback: false,
-    paths: allTokenPaths,
+    paths: allTokenPaths ?? [],
   };
 }
 
@@ -32,6 +41,11 @@ export async function getStaticProps({
   const getTokenResult = await fetcher<TokenCollection[]>(
     `/api/token/${token}`
   );
+
+  if (!getTokenResult) {
+    return { props: null };
+  }
+
   return {
     props: { token: getTokenResult },
   };
