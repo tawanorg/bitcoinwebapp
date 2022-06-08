@@ -14,9 +14,9 @@ export default async function tokenSlashCurrency(
     if (!token || !currency) throw new Error("token or currency is empty");
 
     // Get correct token key in order to fetch correct token's data
-    const _token = SAMPLE_COINS.find((d) => d.symbol === token);
+    const _token = SAMPLE_COINS.find((d) => d.token === token);
 
-    if (!_token) return null;
+    if (!_token) throw new Error("token key went missing");
 
     // Get price history
     const fetchHistory = fetch(
