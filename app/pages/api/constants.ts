@@ -1,12 +1,16 @@
-export const SAMPLE_COINS = [
+import { TokenCollection } from "libs/types";
+
+export const SAMPLE_COINS: TokenCollection[] = [
   {
     key: "cash",
-    symbol: "bch",
+    token: "bch",
     name: "Bitcoin Cash",
+    currency: "usd",
   },
   {
     key: "core",
-    symbol: "btc",
+    token: "btc",
     name: "Bitcoin",
+    currency: "usd",
   },
 ];

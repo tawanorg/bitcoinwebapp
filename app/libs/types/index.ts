@@ -1,7 +1,8 @@
 export type TokenCollection = {
   key: string;
-  symbol: string;
+  token: string;
   name: string;
+  currency: string;
 };
 
 export interface ApiResponse<T> {
@@ -11,8 +12,11 @@ export interface ApiResponse<T> {
 
 export interface GetTokenResponse {
   history: any;
-  prices: {
-    usd: any;
+  token: string;
+  currency: string;
+  spot: {
+    price: number;
+    stamp: number;
   };
 }
 

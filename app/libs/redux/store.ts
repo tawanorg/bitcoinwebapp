@@ -3,6 +3,8 @@ import createSagaMiddleware from "redux-saga";
 import { all } from "redux-saga/effects";
 import feedReducer from "./engine/feed/feed.reducer";
 import feedSaga from "./engine/feed/feed.sagas";
+import tokenReducer from "./engine/token/token.reducer";
+import tokenRootSaga from "./engine/token/token.saga";
 import { IS__DEV } from "./utils/helper";
 import notify from "./utils/notify";
 
@@ -21,6 +23,7 @@ if (IS__DEV) {
 const store = configureStore({
   reducer: {
     feed: feedReducer,
+    token: tokenReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(middlewares),
@@ -31,6 +34,7 @@ sagaMiddleware.run(function* rootSaga() {
   yield all([
     // Put all sagas in here
     feedSaga(),
+    tokenRootSaga(),
   ]);
 });
 

@@ -3,7 +3,11 @@ import { TokenCollection } from "libs/types";
 import Image from "next/image";
 import React from "react";
 
-function Card({ name, symbol, ...props }: TokenCollection) {
+function Card({
+  name = "Untitled",
+  token = "Untitled",
+  ...props
+}: TokenCollection) {
   return (
     <Box {...props}>
       <Stack>
@@ -16,7 +20,7 @@ function Card({ name, symbol, ...props }: TokenCollection) {
           />
         </div>
         <div>
-          {name} ({symbol.toUpperCase()})
+          {name} ({token.toUpperCase()})
         </div>
       </Stack>
     </Box>

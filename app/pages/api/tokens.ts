@@ -2,7 +2,7 @@ import { ApiResponse, TokenCollection } from "libs/types";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { SAMPLE_COINS } from "./constants";
 
-export default function handler(
+export default function allTokens(
   req: NextApiRequest,
   res: NextApiResponse<ApiResponse<TokenCollection[]>>
 ) {

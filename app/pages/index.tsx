@@ -6,18 +6,22 @@ import Card from "./components/Card";
 import fetcher from "./utils/fetcher";
 
 interface Props {
-  tokens: TokenCollection[];
+  collection: TokenCollection[];
 }
 
-const Home: NextPage<Props> = ({ tokens = [] }) => {
+const Home: NextPage<Props> = ({ collection = [] }) => {
   return (
     <Page.Container>
       <Stack>
         <Heading.H1>Tawan Exchange</Heading.H1>
         <HStack>
-          {tokens.map((token, key) => (
-            <Link href={`/token/${token.symbol}`} key={key} passHref>
-              <Card {...token} />
+          {collection.map((collection, key) => (
+            <Link
+              href={`/token/${collection.token}/${collection.currency}`}
+              key={key}
+              passHref
+            >
+              <Card {...collection} />
             </Link>
           ))}
         </HStack>
@@ -27,16 +31,16 @@ const Home: NextPage<Props> = ({ tokens = [] }) => {
 };
 
 export async function getServerSideProps() {
-  const allTokenResult = await fetcher<TokenCollection[]>("/api/all-tokens");
+  const allTokenCollections = await fetcher<TokenCollection[]>("/api/tokens");
 
-  if (!allTokenResult)
+  if (!allTokenCollections)
     return {
-      props: { tokens: [] },
+      props: { collection: [] },
     };
 
   return {
     props: {
-      tokens: allTokenResult,
+      collection: allTokenCollections,
     },
   };
 }
