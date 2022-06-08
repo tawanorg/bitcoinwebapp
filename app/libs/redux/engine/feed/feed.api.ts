@@ -1,4 +1,4 @@
-import type { Post } from "./feed.types";
+import type { Post } from "libs/types";
 
 export async function fetchWeeklyPosts(): Promise<Post[]> {
   const fetchResul = await fetch("/weekly-popular-posts");

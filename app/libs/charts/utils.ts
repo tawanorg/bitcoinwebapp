@@ -1,6 +1,6 @@
 import { ChartItem } from "./data";
 
-export const genChartData = (data: [string, number][]) =>
+export const genChartData = (data: [string, number][] = []) =>
   data
     .map(
       (d) =>

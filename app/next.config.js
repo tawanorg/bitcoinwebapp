@@ -5,7 +5,7 @@ const nextConfig = {
     styledComponents: true,
   },
   images: {
-    domains: ["cryptologos.cc"],
+    domains: ["cryptologos.cc", "static.news.bitcoin.com"],
   },
   async rewrites() {
     return [

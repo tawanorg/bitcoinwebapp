@@ -38,6 +38,7 @@ export default async function tokenSlashCurrency(
         const result: GetTokenResponse = {
           token,
           currency,
+          name: _token.name,
           history,
           spot,
         };

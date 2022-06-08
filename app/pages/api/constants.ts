@@ -6,11 +6,13 @@ export const SAMPLE_COINS: TokenCollection[] = [
     token: "bch",
     name: "Bitcoin Cash",
     currency: "usd",
+    thumbnail: "https://cryptologos.cc/logos/bitcoin-cash-bch-logo.png?v=022",
   },
   {
     key: "core",
     token: "btc",
     name: "Bitcoin",
     currency: "usd",
+    thumbnail: "https://cryptologos.cc/logos/bitcoin-btc-logo.png?v=022",
   },
 ];

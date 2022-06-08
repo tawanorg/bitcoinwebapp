@@ -1,7 +1,7 @@
+import type { Post } from "libs/types";
 import { call, delay, put, takeLatest } from "redux-saga/effects";
 import * as API from "./feed.api";
 import { actions } from "./feed.reducer";
-import type { Post } from "./feed.types";
 
 function* fetchWeeklyPosts() {
   try {

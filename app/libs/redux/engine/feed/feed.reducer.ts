@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import type { Post } from "libs/types";
 import { EngineException } from "../../types";
-import type { Post } from "./feed.types";
 
 export interface FeedState {
   data: {

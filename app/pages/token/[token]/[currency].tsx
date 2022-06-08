@@ -1,18 +1,31 @@
 import { MarketChart } from "@bitcoin/charts";
-import { Heading, Page, Stack } from "@bitcoin/design";
+import { Box, Button, Flex, Heading, Page, Stack } from "@bitcoin/design";
 import { useFeedEngine, useTokenEngine } from "@bitcoin/redux";
 import { TokenSlashCurrency } from "libs/redux/engine/token/token.types";
-import { GetStaticPropsContext, TokenCollection } from "libs/types";
+import {
+  ChartTimeFrame,
+  GetStaticPropsContext,
+  TokenCollection,
+} from "libs/types";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import Header from "pages/components/Header";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import PostList from "../../components/PostList";
 import fetcher from "../../utils/fetcher";
 
 const Home: NextPage<TokenSlashCurrency> = ({ token, currency }) => {
   const feedState = useFeedEngine();
   const tokenState = useTokenEngine();
   const router = useRouter();
+  const [timeframes, _setFrametime] = useState<{
+    currentTimeframe: ChartTimeFrame;
+    availableTimeframe: ChartTimeFrame[];
+  }>(() => ({
+    currentTimeframe: "1 M",
+    availableTimeframe: ["24 H", "7 D", "1 M"],
+  }));
 
   // Get recent feed data/contexts
   const isRecentPostLoading = feedState.loading;
@@ -23,8 +36,12 @@ const Home: NextPage<TokenSlashCurrency> = ({ token, currency }) => {
   const isFetchTokenLoading = tokenState.loading;
   const tokenActions = tokenState.actions;
 
-  const currentTokenSlashCurrency = useSelector(
-    tokenActions.selectTokenSlashCurrency({ token, currency })
+  const currentCrypto = useSelector(
+    tokenActions.selectTokenSlashCurrency({
+      timeframe: timeframes.currentTimeframe,
+      token,
+      currency,
+    })
   );
 
   // On mounted tasks
@@ -36,43 +53,43 @@ const Home: NextPage<TokenSlashCurrency> = ({ token, currency }) => {
     });
   }, [token, currency]);
 
+  const handleSetTimeFrame = (timeframe: ChartTimeFrame) => {
+    _setFrametime((prev) => ({
+      ...prev,
+      currentTimeframe: timeframe,
+    }));
+  };
+
   return (
     <Page.Container>
       <Stack>
-        <div>
-          <button onClick={router.back}>Back</button>
-        </div>
-        <Heading.H1>{token}</Heading.H1>
-        {isFetchTokenLoading && <div>Loading price...</div>}
-        {!isFetchTokenLoading && currentTokenSlashCurrency && (
-          <>
-            <div>
-              {new Intl.NumberFormat("en-US", {
-                style: "currency",
-                currency: currentTokenSlashCurrency?.currency,
-              }).format(currentTokenSlashCurrency.spot.price / 100)}
-            </div>
-            <div>
-              Updated at:{" "}
-              {new Date(
-                currentTokenSlashCurrency?.spot.stamp * 1000
-              ).toLocaleString()}
-            </div>
-          </>
-        )}
-        <MarketChart
-          currency={currentTokenSlashCurrency?.currency}
-          data={currentTokenSlashCurrency?.history ?? []}
-        />
-        {isRecentPostLoading && <div>Loading</div>}
-        {!isRecentPostLoading && recentPosts.length === 0 && <div>No news</div>}
-        {!isRecentPostLoading && recentPosts.length > 0 && (
-          <ul>
-            {recentPosts.map((post, key) => (
-              <li key={key + post.publish_date}>{post.title}</li>
+        <Flex justifyContent="space-between">
+          <Button onClick={router.back}>👈 Back</Button>
+          <Box>
+            {timeframes.availableTimeframe.map((timeframe, k) => (
+              <Button
+                key={`${k}-${timeframe}`}
+                active={timeframe === timeframes.currentTimeframe}
+                onClick={() => handleSetTimeFrame(timeframe)}
+              >
+                {timeframe}
+              </Button>
             ))}
-          </ul>
-        )}
+          </Box>
+        </Flex>
+        <Header
+          isLoading={isFetchTokenLoading}
+          updatedAt={currentCrypto?.spot.stamp}
+          token={token}
+          currency={currentCrypto?.currency ?? currency}
+          price={currentCrypto?.spot.price}
+        />
+        <MarketChart
+          currency={currentCrypto?.currency}
+          data={currentCrypto?.history ?? []}
+        />
+        <Heading.H2>Recent news about {currentCrypto?.name}</Heading.H2>
+        <PostList isLoading={isRecentPostLoading} posts={recentPosts} />
       </Stack>
     </Page.Container>
   );
