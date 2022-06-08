@@ -1,19 +1,25 @@
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actions } from "./feed.reducer";
-import { selectRecentFeed } from "./feed.selectors";
+import { selectContext, selectRecentFeedPosts } from "./feed.selectors";
 
 const useFeedEngine = () => {
   const dispatch = useDispatch();
-  const recentFeed = useSelector(selectRecentFeed);
+  const recentPosts = useSelector(selectRecentFeedPosts);
+  const context = useSelector(selectContext);
 
-  const getInitialFeed = useCallback(() => {
-    dispatch(actions.initialFeed());
-  }, [dispatch]);
+  const getFetchRecentFeed = useCallback(() => {
+    dispatch(actions.requestFetchRecentFeed());
+  }, []);
 
   return {
-    data: { recent: recentFeed },
-    getInitialFeed,
+    data: {
+      recent: recentPosts,
+    },
+    ...context,
+    actions: {
+      getFetchRecentFeed,
+    },
   };
 };
 

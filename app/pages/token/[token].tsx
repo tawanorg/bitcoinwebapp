@@ -5,18 +5,30 @@ import type { NextPage } from "next";
 import { useEffect } from "react";
 import fetcher from "../utils/fetcher";
 
-const Home: NextPage = (props) => {
-  const { data, ...actions } = useFeedEngine();
+const Home: NextPage = () => {
+  const feedState = useFeedEngine();
 
-  // Get recent news from source
+  // Get recent feed data/contexts
+  const isRecentPostLoading = feedState.loading;
+  const recentPosts = feedState.data.recent;
+  const feedActions = feedState.actions;
+
   useEffect(() => {
-    actions.getInitialFeed();
+    feedActions.getFetchRecentFeed();
   }, []);
 
   return (
     <Page.Container>
       <Stack>
         <Heading.H1>Tawan Exchange</Heading.H1>
+        {!isRecentPostLoading && recentPosts.length === 0 && <div>No news</div>}
+        {!isRecentPostLoading && recentPosts.length > 0 && (
+          <ul>
+            {recentPosts.map((post, key) => (
+              <li key={key + post.publish_date}>{post.title}</li>
+            ))}
+          </ul>
+        )}
       </Stack>
     </Page.Container>
   );

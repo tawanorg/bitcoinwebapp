@@ -3,7 +3,12 @@ import { RootState } from "../../store";
 
 const selectFeedEntity = (state: RootState) => state.feed;
 
-export const selectRecentFeed = createSelector(
+export const selectContext = createSelector(
   selectFeedEntity,
-  (state) => state.recent ?? []
+  ({ data, ...context }) => context
+);
+
+export const selectRecentFeedPosts = createSelector(
+  selectFeedEntity,
+  (state) => state.data.recent ?? []
 );

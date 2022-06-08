@@ -7,6 +7,15 @@ const nextConfig = {
   images: {
     domains: ["cryptologos.cc"],
   },
+  async rewrites() {
+    return [
+      {
+        source: "/weekly-popular-posts",
+        destination:
+          "https://news.bitcoin.com/wp-content/weekly_popular_posts.json",
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
