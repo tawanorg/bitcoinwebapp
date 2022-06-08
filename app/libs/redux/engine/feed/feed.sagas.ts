@@ -8,7 +8,7 @@ function* fetchWeeklyPosts() {
     // something wrong with redux-saga call type
     // @ts-ignore
     const fetchResult: Post[] = yield call(API.fetchWeeklyPosts);
-    yield delay(500);
+    yield delay(200);
     yield put(actions.updateFetchRecentFeed(fetchResult));
   } catch (error) {
     console.error(error);
