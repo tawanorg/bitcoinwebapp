@@ -1,11 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { EngineException } from "../../types";
 
 export interface FeedState {
-  recent: [];
+  data: {
+    recent: any[];
+  };
+  loading: boolean;
+  error?: EngineException;
 }
 
 const initialState: FeedState = {
-  recent: [],
+  data: {
+    recent: [],
+  },
+  loading: false,
+  error: null,
 };
 
 const feed = createSlice({
@@ -13,7 +22,7 @@ const feed = createSlice({
   initialState,
   reducers: {
     initialFeed: (state) => {
-      state.recent = [];
+      state.data.recent = [];
     },
   },
 });
