@@ -1,5 +1,5 @@
-import Navigation from "pages/components/Navigation";
 import * as React from "react";
+import Navigation from "../components/Navigation";
 
 function withPageBase<T>(WrappedComponent: React.ComponentType<T>) {
   const EnhacedCompomnent = (props: T) => {

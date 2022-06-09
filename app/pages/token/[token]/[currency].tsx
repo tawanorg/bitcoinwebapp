@@ -10,11 +10,11 @@ import {
 } from "libs/types";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import Header from "pages/components/Header";
-import withPageBase from "pages/layouts/withPage";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import Header from "../../components/Header";
 import PostList from "../../components/PostList";
+import withPageBase from "../../layouts/withPage";
 
 const TokenSlashCurrencyPage: NextPage<TokenSlashCurrency> = ({
   token,
@@ -110,7 +110,9 @@ export async function getStaticPaths() {
     },
   });
 
-  const fetchAllTokenResult = await fetch(process.env.URL + "/api/tokens");
+  const fetchAllTokenResult = await fetch(
+    process.env.NEXT_PUBLIC_API_URL + "/api/tokens"
+  );
 
   const getAllTokenResult: ApiResponse<TokenCollection[]> =
     await fetchAllTokenResult.json();

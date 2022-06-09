@@ -44,7 +44,9 @@ const Home: NextPage<Props> = ({ collection = [] }) => {
 };
 
 export async function getServerSideProps() {
-  const fetchTokenCollection = await fetch(process.env.URL + "/api/tokens");
+  const fetchTokenCollection = await fetch(
+    process.env.NEXT_PUBLIC_API_URL + "/api/tokens"
+  );
   const allTokenCollections: ApiResponse<TokenCollection[]> =
     await fetchTokenCollection.json();
 
