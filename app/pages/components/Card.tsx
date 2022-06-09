@@ -2,7 +2,7 @@ import { QuickChart } from "@bitcoin/charts";
 import { Box, Flex, Heading, HStack, Stack } from "@bitcoin/design";
 import { GetTokenResponse, TokenCollection } from "libs/types";
 import Image from "next/image";
-import React from "react";
+import React, { forwardRef, PropsWithChildren } from "react";
 import styled from "styled-components";
 
 const CardBox = styled(Stack)`
@@ -23,17 +23,21 @@ const CardBox = styled(Stack)`
   }
 `;
 
-function Card({
-  name = "Untitled",
-  token = "Untitled",
-  thumbnail,
-  cachedToken,
-  // @ts-ignore
-  children,
-  ...props
-}: TokenCollection & { cachedToken: GetTokenResponse | undefined }) {
+function Card(
+  {
+    name = "Untitled",
+    token = "Untitled",
+    thumbnail,
+    cachedToken,
+    children,
+    ...props
+  }: PropsWithChildren<
+    TokenCollection & { cachedToken: GetTokenResponse | undefined }
+  >,
+  ref: React.ForwardedRef<HTMLDivElement>
+) {
   return (
-    <Box {...props}>
+    <Box {...props} ref={ref}>
       <CardBox>
         <HStack>
           <Stack>
@@ -58,4 +62,4 @@ function Card({
   );
 }
 
-export default Card;
+export default forwardRef(Card);

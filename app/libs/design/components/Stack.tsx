@@ -6,7 +6,6 @@ const Stack = styled(Flex)`
   flex-direction: column;
   width: 100%;
   ${(props) => directionStyles(props.theme.spacing).column}
-  ${(props) => props}
 `;
 
 export default Stack;

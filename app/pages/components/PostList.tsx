@@ -1,4 +1,4 @@
-import { Stack } from "@bitcoin/design";
+import { Flex, LoadingSpinner, Stack, Text } from "@bitcoin/design";
 import type { Post as PostProps } from "libs/types";
 import React from "react";
 import Post from "./Post";
@@ -9,18 +9,40 @@ interface Props {
 }
 
 function PostList({ isLoading, posts = [] }: Props) {
+  const isEmpty = !isLoading && posts.length === 0;
+
+  if (isLoading) {
+    return (
+      <Flex
+        alignItems="center"
+        justifyContent="center"
+        paddingTop={20}
+        paddingBottom={20}
+      >
+        <LoadingSpinner />
+      </Flex>
+    );
+  }
+
+  if (isEmpty) {
+    return (
+      <Flex
+        alignItems="center"
+        justifyContent="center"
+        paddingTop={20}
+        paddingBottom={20}
+      >
+        <Text.P>No news</Text.P>
+      </Flex>
+    );
+  }
+
   return (
-    <div>
-      {isLoading && <div>Loading</div>}
-      {!isLoading && posts.length === 0 && <div>No news</div>}
-      {!isLoading && posts.length > 0 && (
-        <Stack>
-          {posts.map((post, key) => (
-            <Post key={key + post.publish_date} {...post} />
-          ))}
-        </Stack>
-      )}
-    </div>
+    <Stack>
+      {posts.map((post, key) => (
+        <Post key={key + post.publish_date} {...post} />
+      ))}
+    </Stack>
   );
 }
 

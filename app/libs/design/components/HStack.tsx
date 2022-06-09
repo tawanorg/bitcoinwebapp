@@ -4,6 +4,7 @@ import Flex from "./Flex";
 
 const Stack = styled(Flex)`
   flex-direction: row;
+  align-items: center;
 
   ${(props) => directionStyles(props.theme.spacing).row}
 

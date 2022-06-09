@@ -1,10 +1,10 @@
 import { Heading, Page, Stack } from "@bitcoin/design";
 import { useTokenEngine } from "@bitcoin/redux";
-import { TokenCollection } from "libs/types";
+import { ApiResponse, TokenCollection } from "libs/types";
 import type { NextPage } from "next";
 import Link from "next/link";
 import Card from "./components/Card";
-import fetcher from "./utils/fetcher";
+import withPageBase from "./layouts/withPage";
 import makeTokenKey from "./utils/makeTokenKey";
 
 interface Props {
@@ -44,7 +44,9 @@ const Home: NextPage<Props> = ({ collection = [] }) => {
 };
 
 export async function getServerSideProps() {
-  const allTokenCollections = await fetcher<TokenCollection[]>("/api/tokens");
+  const fetchTokenCollection = await fetch(process.env.URL + "/api/tokens");
+  const allTokenCollections: ApiResponse<TokenCollection[]> =
+    await fetchTokenCollection.json();
 
   if (!allTokenCollections)
     return {
@@ -53,9 +55,9 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      collection: allTokenCollections,
+      collection: allTokenCollections?.data,
     },
   };
 }
 
-export default Home;
+export default withPageBase(Home);

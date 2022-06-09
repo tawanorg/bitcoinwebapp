@@ -1,3 +1,4 @@
+import { Text } from "libs/design";
 import { Suspense } from "react";
 import {
   Area,
@@ -8,7 +9,9 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { currencyFormatter, genChartData } from "./utils";
+import { useTheme } from "styled-components";
+import TooltipWrapper from "../styles/Tooltip.styles";
+import { currencyFormatter, genChartData } from "../utils";
 
 interface Props {
   currency?: string;
@@ -17,7 +20,7 @@ interface Props {
 
 const MarketChart = ({ currency = "USD", data: rawData = [] }: Props) => {
   const data = genChartData(rawData);
-
+  const theme = useTheme();
   return (
     <Suspense fallback={"Loading..."}>
       <ResponsiveContainer width="100%" height={400}>
@@ -32,12 +35,20 @@ const MarketChart = ({ currency = "USD", data: rawData = [] }: Props) => {
         >
           <defs>
             <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#F19" stopOpacity={0.6} />
-              <stop offset="75%" stopColor="#F19" stopOpacity={0.04} />
+              <stop
+                offset="0%"
+                stopColor={theme.colors.highlight}
+                stopOpacity={0.6}
+              />
+              <stop
+                offset="75%"
+                stopColor={theme.colors.highlight}
+                stopOpacity={0.04}
+              />
             </linearGradient>
           </defs>
           <CartesianGrid
-            stroke="#eee"
+            stroke={theme.page.border}
             strokeDasharray="5 5"
             horizontal
             vertical={false}
@@ -61,17 +72,19 @@ const MarketChart = ({ currency = "USD", data: rawData = [] }: Props) => {
           <Tooltip
             content={({ active, payload, label }) =>
               active && (
-                <div>
-                  <p>{new Date(label).toLocaleString()}</p>
+                <TooltipWrapper>
+                  <Text.Small className="label">
+                    {new Date(label).toDateString()}
+                  </Text.Small>
                   {payload &&
                     payload.length > 0 &&
                     payload.map((p, k) => (
-                      <span key={k}>
+                      <Text.Small key={k} className="price">
                         {p.value &&
                           currencyFormatter(currency, p.value as number)}
-                      </span>
+                      </Text.Small>
                     ))}
-                </div>
+                </TooltipWrapper>
               )
             }
           />

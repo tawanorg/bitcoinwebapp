@@ -1,2 +1,2 @@
-export { default as MarketChart } from "./MarketChart";
-export { default as QuickChart } from "./QuickChart";
+export { default as MarketChart } from "./components/MarketChart";
+export { default as QuickChart } from "./components/QuickChart";

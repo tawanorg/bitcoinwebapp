@@ -7,4 +7,9 @@ Text.Small = styled.span`
   line-height: 1em;
 `;
 
+Text.P = styled.p`
+  font-size: 1rem;
+  line-height: 1.5em;
+`;
+
 export default Text;

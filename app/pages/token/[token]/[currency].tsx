@@ -3,6 +3,7 @@ import { Box, Button, Flex, Heading, Page, Stack } from "@bitcoin/design";
 import { useFeedEngine, useTokenEngine } from "@bitcoin/redux";
 import { TokenSlashCurrency } from "libs/redux/engine/token/token.types";
 import {
+  ApiResponse,
   ChartTimeFrame,
   GetStaticPropsContext,
   TokenCollection,
@@ -10,12 +11,15 @@ import {
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import Header from "pages/components/Header";
+import withPageBase from "pages/layouts/withPage";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import PostList from "../../components/PostList";
-import fetcher from "../../utils/fetcher";
 
-const Home: NextPage<TokenSlashCurrency> = ({ token, currency }) => {
+const TokenSlashCurrencyPage: NextPage<TokenSlashCurrency> = ({
+  token,
+  currency,
+}) => {
   const feedState = useFeedEngine();
   const tokenState = useTokenEngine();
   const router = useRouter();
@@ -96,7 +100,20 @@ const Home: NextPage<TokenSlashCurrency> = ({ token, currency }) => {
 };
 
 export async function getStaticPaths() {
-  const getAllTokenResult = await fetcher<TokenCollection[]>("/api/tokens");
+  let allTokenPaths: { params: Pick<TokenCollection, "token" | "currency"> }[] =
+    [];
+
+  const makeParams = ({ token, currency }: TokenCollection) => ({
+    params: {
+      token,
+      currency,
+    },
+  });
+
+  const fetchAllTokenResult = await fetch(process.env.URL + "/api/tokens");
+
+  const getAllTokenResult: ApiResponse<TokenCollection[]> =
+    await fetchAllTokenResult.json();
 
   if (!getAllTokenResult) {
     return {
@@ -105,16 +122,13 @@ export async function getStaticPaths() {
     };
   }
 
-  const allTokenPaths = getAllTokenResult.map(({ token, currency }) => ({
-    params: {
-      token,
-      currency,
-    },
-  }));
+  if (getAllTokenResult?.data && getAllTokenResult.data?.length > 0) {
+    allTokenPaths = getAllTokenResult.data.map(makeParams);
+  }
 
   return {
     fallback: false,
-    paths: allTokenPaths ?? [],
+    paths: allTokenPaths,
   };
 }
 
@@ -126,4 +140,4 @@ export async function getStaticProps({
   };
 }
 
-export default Home;
+export default withPageBase(TokenSlashCurrencyPage);
